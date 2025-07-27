@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+
+    <!-- Vertical timeline line -->
+    <View
+        android:id="@+id/timeline_line"
+        android:layout_width="3dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="15dp"
+        android:background="#7E64FF" />
+
+    <!-- Date circle -->
+    <TextView
+        android:id="@+id/date_circle"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_alignStart="@id/timeline_line"
+        android:layout_marginStart="-15dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_circle"
+        android:gravity="center"
+        android:text="20"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold" />
+
+    <!-- Container for event cards -->
+    <LinearLayout
+        android:id="@+id/event_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@id/date_circle"
+        android:orientation="vertical"
+        android:layout_marginStart="15dp">
+
+        <!-- First event card -->
+        <LinearLayout
+            android:id="@+id/event_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_event_card_checked"
+            android:padding="10dp"
+            android:layout_marginBottom="12dp">
+
+            <!-- Event title and checkbox -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Meeting with Anomali Team"
+                    android:textColor="#FFFFFF"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <CheckBox
+                    android:id="@+id/checkbox"
+                    android:layout_width="40dp"
+                    android:layout_height="35dp"
+                    android:buttonTint="#FFFFFF"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false" />
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="#C68AFF"/>
+            <!-- Time -->
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Time   07.00 am - 10.00 am"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="8dp" />
+
+            <!-- Place -->
+            <TextView
+                android:id="@+id/place"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Place   Anomali Office"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="4dp" />
+
+            <!-- Notes -->
+            <TextView
+                android:id="@+id/notes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Notes   Nothing"
+                android:textColor="#FFFFFF"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+
+        <!-- You can repeat more events like this inside RecyclerView -->
+    </LinearLayout>
+</RelativeLayout>

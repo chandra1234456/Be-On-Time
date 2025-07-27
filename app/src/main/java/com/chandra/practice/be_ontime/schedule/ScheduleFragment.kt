@@ -10,18 +10,24 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chandra.practice.be_ontime.R
+import com.chandra.practice.be_ontime.databinding.FragmentScheduleBinding
+import com.chandra.practice.be_ontime.schedule.adapter.ScheduleAdapter
+import com.chandra.practice.be_ontime.schedule.model.ScheduleEventItem
 import com.chandra.practice.be_ontime.util.calender.CalendarAdapter
 import com.chandra.practice.be_ontime.util.calender.CalendarUtils
+import com.chandra.practice.be_ontime.util.gone
+import com.chandra.practice.be_ontime.util.visible
 import java.text.DateFormatSymbols
 import java.util.Calendar
 
 class ScheduleFragment : Fragment() {
-
-    private lateinit var recyclerView: RecyclerView
+    private lateinit var scheduleBinding : FragmentScheduleBinding
     private lateinit var monthSpinner: Spinner
     private lateinit var yearSpinner: Spinner
     private lateinit var monthYearText: TextView
@@ -30,8 +36,23 @@ class ScheduleFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-                             ): View? {
-        return inflater.inflate(R.layout.fragment_schedule , container, false)
+                             ): View {
+        scheduleBinding = FragmentScheduleBinding.inflate(layoutInflater)
+        val list = arrayListOf(ScheduleEventItem("Meeting with Anomaly Team", "Time   07.00 am - 10.00 am", "Place  Anomaly Office", "Notes  Nothing", "Dinner"),
+                ScheduleEventItem("Meeting with Anomaly New Team", "Time   07.01 am - 10.10 am", "Place Yes Anomaly Office", "Notes   Nothing", "Lunch"))
+        val hasItems = list.isEmpty()
+        // Toggle visibility
+        scheduleBinding.emptySchedule.isVisible = hasItems
+        scheduleBinding.scheduleRecyclerView.isVisible = !hasItems
+        // Set up RecyclerView only if data is available
+        if (hasItems) {
+            with(scheduleBinding.scheduleRecyclerView) {
+                layoutManager = LinearLayoutManager(requireContext())
+                adapter = ScheduleAdapter(list)
+            }
+        }
+
+        return scheduleBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

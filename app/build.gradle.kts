@@ -68,4 +68,21 @@ dependencies {
 
     implementation("androidx.viewpager2:viewpager2:1.1.0")
 
+    //
+    androidTestImplementation ("androidx.test.ext:junit-ktx:1.2.1")
+    androidTestImplementation ("androidx.test.espresso:espresso-core:3.6.1")
+
+    // Local Unit Tests (JVM)
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("androidx.test:core:1.5.0")
+    testImplementation("org.mockito:mockito-core:5.3.1")
+
+    // Instrumented Tests (Android)
+    androidTestImplementation("androidx.test.ext:junit:1.1.5") // AndroidJUnit4
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("androidx.test:runner:1.5.2")
+    androidTestImplementation("androidx.test:rules:1.5.0")
+
+    debugImplementation("androidx.fragment:fragment-testing:1.8.8")
+
 }

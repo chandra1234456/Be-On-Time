@@ -74,13 +74,17 @@ class HomeFragment : Fragment() {
 
         val adapter = ViewPagerAdapter(requireActivity())
         homeBinding.viewPager.adapter = adapter
-
+        // ✅ Disable swipe
+        homeBinding.viewPager.isUserInputEnabled = false
         TabLayoutMediator(homeBinding.tabLayout, homeBinding.viewPager) { tab, position ->
             tab.text = if (position == 0) "Schedule" else "Note"
         }.attach()
 
         homeBinding.notifications.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_notificationFragment)
+        }
+        homeBinding.settings.setOnClickListener {
+            findNavController().navigate(R.id.settingsFragment)
         }
 
 

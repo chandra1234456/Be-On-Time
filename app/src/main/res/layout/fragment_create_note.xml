@@ -53,6 +53,7 @@
         app:layout_constraintTop_toBottomOf="@id/toolBarLL">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tvTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Title"
@@ -61,12 +62,20 @@
             android:textColor="@color/white" />
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Discription"
             android:layout_marginTop="10dp"
             android:textColorHint="@color/white"
             android:textColor="@color/white" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            />
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton

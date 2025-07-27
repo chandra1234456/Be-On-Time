@@ -17,6 +17,12 @@ class CreateNoteFragment : Fragment() {
         savedInstanceState : Bundle? ,
                              ) : View {
         createNoteBinding = FragmentCreateNoteBinding.inflate(layoutInflater)
+
+        createNoteBinding.saveNote.setOnClickListener {
+            val noteTitle = createNoteBinding.tvTitle.text.toString()
+            val noteDescription = createNoteBinding.tvDescription.text.toString()
+            createNoteBinding.tvDisplay.text = "$noteTitle : $noteDescription"
+        }
         handleOnBackPressed {
             findNavController().navigate(R.id.noteFragment)
         }
