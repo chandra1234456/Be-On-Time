@@ -1,14 +1,19 @@
 package com.chandra.practice.be_ontime.util
 
+import android.view.View
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import com.chandra.practice.be_ontime.util.calender.CalendarUtils
 import java.util.Calendar
 import java.util.Locale
 
-fun generateMonthData(year: Int, month: Int): CalendarUtils.MonthData {
+fun generateMonthData(year : Int , month : Int) : CalendarUtils.MonthData {
     val calendar = Calendar.getInstance()
-    calendar.set(year, month, 1)
+    calendar.set(year , month , 1)
 
-    val monthName = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())?.uppercase() ?: ""
+    val monthName =
+        calendar.getDisplayName(Calendar.MONTH , Calendar.LONG , Locale.getDefault())?.uppercase()
+            ?: ""
     val daysInMonth = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
     val firstDayOfWeek = calendar.get(Calendar.DAY_OF_WEEK) // Sunday = 1
 
@@ -16,7 +21,7 @@ fun generateMonthData(year: Int, month: Int): CalendarUtils.MonthData {
     val offsetStart = firstDayOfWeek - Calendar.SUNDAY // 0 if Sunday
     val prevMonthDays = List(offsetStart) { "" }
 
-    val currentMonthDays = (1..daysInMonth).map { it.toString() }
+    val currentMonthDays = (1 .. daysInMonth).map { it.toString() }
 
     val totalCells = 6 * 7
     val nextMonthDays = List(totalCells - (prevMonthDays.size + currentMonthDays.size)) { "" }
@@ -26,3 +31,27 @@ fun generateMonthData(year: Int, month: Int): CalendarUtils.MonthData {
 
     return CalendarUtils.MonthData(monthName , year , weeks)
 }
+
+fun Fragment.handleOnBackPressed(callback : () -> Unit) {
+    requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner ,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    callback()
+                }
+            }
+                                                         )
+}
+
+fun View.setSingleClickListener(interval: Long = 600L , onClick: (View) -> Unit) {
+    var lastClickTime = 0L
+
+    setOnClickListener {
+        val currentTime = System.currentTimeMillis()
+        if (currentTime - lastClickTime > interval) {
+            lastClickTime = currentTime
+            onClick(it)
+        }
+    }
+}
+
+

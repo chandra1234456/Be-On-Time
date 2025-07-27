@@ -1,4 +1,4 @@
-package com.chandra.practice.be_ontime
+package com.chandra.practice.be_ontime.schedule
 
 import android.animation.ValueAnimator
 import android.os.Bundle
@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.chandra.practice.be_ontime.R
 import com.chandra.practice.be_ontime.util.calender.CalendarAdapter
 import com.chandra.practice.be_ontime.util.calender.CalendarUtils
 import java.text.DateFormatSymbols
@@ -30,7 +31,7 @@ class ScheduleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
                              ): View? {
-        return inflater.inflate(R.layout.fragment_schedule, container, false)
+        return inflater.inflate(R.layout.fragment_schedule , container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -48,47 +49,60 @@ class ScheduleFragment : Fragment() {
         val defaultMonth = calendar.get(Calendar.MONTH)
         val defaultYear = calendar.get(Calendar.YEAR)
 
+        // Set up spinners
         monthSpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, months)
         yearSpinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, years)
 
-        monthSpinner.setSelection(defaultMonth)
-        yearSpinner.setSelection(years.indexOf(defaultYear))
+        monthSpinner.setSelection(defaultMonth, false)
+        val defaultYearIndex = years.indexOf(defaultYear).takeIf { it >= 0 } ?: 0
+        yearSpinner.setSelection(defaultYearIndex, false)
 
+        // Calendar adapter
         calendarRecyclerView.layoutManager = GridLayoutManager(requireContext(), 1)
+        val calendarAdapter = CalendarAdapter(emptyList(), defaultMonth, defaultYear) { selectedDate ->
+            Toast.makeText(requireContext(), "Selected: $selectedDate", Toast.LENGTH_SHORT).show()
+        }
+        calendarRecyclerView.adapter = calendarAdapter
 
         val updateCalendar = {
             val selectedMonth = monthSpinner.selectedItemPosition
             val selectedYear = years[yearSpinner.selectedItemPosition]
-
-            CalendarAdapter.selectedMonth = selectedMonth
-            CalendarAdapter.selectedYear = selectedYear
-
             val data = CalendarUtils.generateMonthData(selectedYear, selectedMonth)
+
             monthYearText.text = "${data.monthName} ${data.year}"
 
-            calendarRecyclerView.adapter = CalendarAdapter(data.weeks) { selectedDate ->
-                Toast.makeText(requireContext(), "Selected: $selectedDate", Toast.LENGTH_SHORT).show()
-            }
+            calendarAdapter.updateData(
+                    weeks = data.weeks,
+                    selectedMonth = selectedMonth,
+                    selectedYear = selectedYear
+                                      )
         }
 
+        // Set spinner listeners separately
         monthSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, pos: Int, id: Long) = updateCalendar()
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                updateCalendar()
+            }
+
             override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
-        yearSpinner.onItemSelectedListener = monthSpinner.onItemSelectedListener
+        yearSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                updateCalendar()
+            }
 
-        updateCalendar()
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        }
 
+        updateCalendar() // Initial calendar update
+
+        // Scroll listener to shrink/expand
         calendarRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(rv, dx, dy)
-
-                if (dy > 10) {
-                    shrinkCalendar()
-                } else if (dy < -10) {
-                    expandCalendar()
-                }
+                if (dy > 10) shrinkCalendar()
+                else if (dy < -10) expandCalendar()
             }
         })
     }
@@ -97,7 +111,7 @@ class ScheduleFragment : Fragment() {
         calendarRecyclerView.post {
             val layoutParams = calendarRecyclerView.layoutParams
             val originalHeight = calendarRecyclerView.height
-            val targetHeight = 120 // You can adjust this
+            val targetHeight = 120 // Adjust as needed
 
             val animator = ValueAnimator.ofInt(originalHeight, targetHeight)
             animator.duration = 300

@@ -1,0 +1,4 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <corners android:radius="10dp" /> <!-- Match your corner radius -->
+    <solid android:color="@color/toggle_button_unselected" /> <!-- Default color -->
+</shape>

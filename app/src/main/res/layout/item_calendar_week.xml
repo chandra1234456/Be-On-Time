@@ -3,14 +3,41 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:weightSum="7"
-    android:padding="4dp">
+    android:padding="4dp"
+    android:weightSum="7">
 
-    <TextView android:id="@+id/sun" style="@style/CalendarDay" />
-    <TextView android:id="@+id/mon" style="@style/CalendarDay" />
-    <TextView android:id="@+id/tue" style="@style/CalendarDay" />
-    <TextView android:id="@+id/wed" style="@style/CalendarDay" />
-    <TextView android:id="@+id/thu" style="@style/CalendarDay" />
-    <TextView android:id="@+id/fri" style="@style/CalendarDay" />
-    <TextView android:id="@+id/sat" style="@style/CalendarDay" />
+    <TextView
+        android:id="@+id/sun"
+        style="@style/CalendarDay"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/mon"
+        android:textColor="@color/white"
+        style="@style/CalendarDay" />
+
+    <TextView
+        android:textColor="@color/white"
+        android:id="@+id/tue"
+        style="@style/CalendarDay" />
+
+    <TextView
+        android:textColor="@color/white"
+        android:id="@+id/wed"
+        style="@style/CalendarDay" />
+
+    <TextView
+        android:textColor="@color/white"
+        android:id="@+id/thu"
+        style="@style/CalendarDay" />
+
+    <TextView
+        android:textColor="@color/white"
+        android:id="@+id/fri"
+        style="@style/CalendarDay" />
+
+    <TextView
+        android:textColor="@color/white"
+        android:id="@+id/sat"
+        style="@style/CalendarDay" />
 </LinearLayout>

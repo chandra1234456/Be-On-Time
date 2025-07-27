@@ -1,14 +1,15 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/splash">
 
     <fragment
         android:id="@+id/splash"
-        android:name="com.chandra.practice.be_ontime.SplashFragment"
+        android:name="com.chandra.practice.be_ontime.entry.SplashFragment"
+        tools:layout="@layout/fragment_splash"
         android:label="Profile">
 
-        <!-- Action to navigate from Profile to Friends List. -->
         <action
             android:id="@+id/action_profile_to_friendslist"
             app:destination="@id/onBoarding" />
@@ -16,8 +17,50 @@
 
     <fragment
         android:id="@+id/onBoarding"
-        android:name="com.chandra.practice.be_ontime.OnBoardingFragment"
-        android:label="Friends List" />
+        android:name="com.chandra.practice.be_ontime.entry.OnBoardingFragment"
+        tools:layout="@layout/fragment_on_boarding"
+        android:label="Friends List" >
+        <action
+            android:id="@+id/action_onBoarding_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_onBoarding_to_noteFragment"
+            app:destination="@id/noteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.chandra.practice.be_ontime.home.HomeFragment"
+        tools:layout="@layout/fragment_home"
+        android:label="Friends List" >
+        <action
+            android:id="@+id/action_homeFragment_to_createNoteFragment"
+            app:destination="@id/createNoteFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_notificationFragment"
+            app:destination="@id/notificationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/noteFragment"
+        android:name="com.chandra.practice.be_ontime.note.NoteFragment"
+        android:label="fragment_note"
+        tools:layout="@layout/fragment_note" />
+    <fragment
+        android:id="@+id/createNoteFragment"
+        android:name="com.chandra.practice.be_ontime.note.CreateNoteFragment"
+        android:label="CreateNoteFragment"
+        tools:layout="@layout/fragment_create_note"/>
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.chandra.practice.be_ontime.others.NotificationFragment"
+        android:label="fragment_notification"
+        tools:layout="@layout/fragment_notification" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.chandra.practice.be_ontime.others.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 
-    <!-- Add other fragment destinations similarly. -->
 </navigation>

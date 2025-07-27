@@ -1,4 +1,4 @@
-package com.chandra.practice.be_ontime
+package com.chandra.practice.be_ontime.entry
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.chandra.practice.be_ontime.R
 import com.chandra.practice.be_ontime.databinding.FragmentSplashBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
